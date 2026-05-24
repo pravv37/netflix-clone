@@ -4,17 +4,15 @@ import { Link } from "react-router-dom"
 
 function Favorites() {
 
-  const [favorites,
-    setFavorites] =
+  const [favorites, setFavorites] =
     useState([])
 
+  // Backend API
   const API =
-    "https://netflix-backend-xp9g.onrender.com/api/movies/api/movies"
+    "https://netflix-backend-xp9g.onrender.com/api/movies"
 
   useEffect(() => {
-
     fetchFavorites()
-
   }, [])
 
   const fetchFavorites =
@@ -22,22 +20,20 @@ function Favorites() {
       try {
 
         const res =
-          await axios.get(
-            API
-          )
+          await axios.get(API)
 
+        // Only favorite movies
         const favMovies =
           res.data.filter(
             (movie) =>
-              movie.favorite
+              movie.favorite === true
           )
 
-        setFavorites(
-          favMovies
-        )
+        setFavorites(favMovies)
 
       } catch (error) {
         console.log(
+          "Error fetching favorites:",
           error
         )
       }
@@ -47,15 +43,16 @@ function Favorites() {
     <div
       className="container"
       style={{
-        padding:
-          "40px"
+        padding: "40px",
+        minHeight: "100vh",
+        background: "black",
+        color: "white"
       }}
     >
 
       <h1
         style={{
-          marginBottom:
-            "40px"
+          marginBottom: "20px"
         }}
       >
         ❤️ My List
@@ -64,12 +61,9 @@ function Favorites() {
       <Link
         to="/"
         style={{
-          color:
-            "red",
-          textDecoration:
-            "none",
-          fontSize:
-            "20px"
+          color: "red",
+          textDecoration: "none",
+          fontSize: "20px"
         }}
       >
         ← Back Home
@@ -78,45 +72,58 @@ function Favorites() {
       <div
         className="movie-row"
         style={{
-          marginTop:
-            "40px"
+          marginTop: "40px",
+          display: "flex",
+          gap: "20px",
+          flexWrap: "wrap"
         }}
       >
 
-        {favorites.length >
-        0 ? (
+        {favorites.length > 0 ? (
 
           favorites.map(
             (movie) => (
+
               <div
-                key={
-                  movie._id
-                }
+                key={movie._id}
                 className="movie-card"
+                style={{
+                  width: "220px",
+                  background: "#111",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                  transition: "0.3s"
+                }}
               >
 
                 <img
-                  src={
-                    movie.image
-                  }
-                  alt={
-                    movie.title
-                  }
+                  src={movie.image}
+                  alt={movie.title}
+                  style={{
+                    width: "100%",
+                    height: "320px",
+                    objectFit: "cover"
+                  }}
                 />
 
-                <div className="movie-info">
+                <div
+                  className="movie-info"
+                  style={{
+                    padding: "15px"
+                  }}
+                >
 
-                  <h2>
-                    {
-                      movie.title
-                    }
+                  <h2
+                    style={{
+                      fontSize: "20px",
+                      marginBottom: "10px"
+                    }}
+                  >
+                    {movie.title}
                   </h2>
 
                   <p>
-                    ⭐{" "}
-                    {
-                      movie.rating
-                    }
+                    ⭐ {movie.rating}
                   </p>
 
                   <button
@@ -127,6 +134,15 @@ function Favorites() {
                         "_blank"
                       )
                     }
+                    style={{
+                      background: "red",
+                      color: "white",
+                      border: "none",
+                      padding: "10px 20px",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      marginTop: "10px"
+                    }}
                   >
                     ▶ Play
                   </button>
@@ -140,8 +156,7 @@ function Favorites() {
         ) : (
 
           <h2>
-            No Favorite
-            Movies Yet
+            No Favorite Movies Yet
           </h2>
 
         )}
