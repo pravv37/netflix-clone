@@ -9,7 +9,7 @@ function Favorites() {
     useState([])
 
   const API =
-    "http://localhost:5000/api/movies"
+    "https://netflix-backend-xp9g.onrender.com/api/movies/api/movies"
 
   useEffect(() => {
 

@@ -36,7 +36,7 @@ function App() {
     useState("All")
 
   const API =
-    "http://localhost:5000/api/movies"
+    "https://netflix-backend-xp9g.onrender.com/api/movies/api/movies"
 
   // LOGIN CHECK
   useEffect(() => {
