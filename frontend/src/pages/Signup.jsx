@@ -43,7 +43,7 @@ function Signup() {
         setLoading(true)
 
         await axios.post(
-          "http://localhost:5000/api/auth/signup",
+          "https://netflix-backend-xp9g.onrender.com/api/auth/signup",
           {
             name,
             email,
